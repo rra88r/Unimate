@@ -230,6 +230,21 @@ export const translations = {
     hasAccount: "لديك حساب بالفعل؟",
     quickDemoLogin: "دخول سريع بالحساب التجريبي (Demo)",
     passwordsDoNotMatch: "كلمتا المرور غير متطابقتين",
+
+    // PWA & Offline
+    pwaInstallTitle: "تثبيت تطبيق UniMate",
+    pwaInstallSubtitle: "ثبّت التطبيق على شاشتك الرئيسية للوصول السريع وتجربة سلسة",
+    pwaInstallIosStep1: "اضغط على زر المشاركة (Share) في شريط المتصفح",
+    pwaInstallIosStep2: "مرّر للأسفل واختر 'إضافة إلى الصفحة الرئيسية'",
+    pwaInstallIosStep3: "اضغط على 'إضافة' في الزاوية العلوية",
+    pwaInstallButton: "تثبيت التطبيق",
+    pwaInstallDismiss: "لاحقاً",
+    pwaInstalledBanner: "تم تثبيت UniMate بنجاح!",
+    offlineBannerTitle: "أنت في وضع عدم الاتصال",
+    offlineBannerDesc: "البيانات المعروضة قد تكون محدودة حتى عودة الاتصال",
+    offlineRetry: "إعادة المحاولة",
+    pwaUpdateAvailable: "تحديث جديد متوفر لتطبيق UniMate",
+    pwaUpdateAction: "تحديث الآن",
   },
   en: {
     // App Branding
@@ -460,6 +475,21 @@ export const translations = {
     hasAccount: "Already have an account?",
     quickDemoLogin: "Quick Demo Login",
     passwordsDoNotMatch: "Passwords do not match",
+
+    // PWA & Offline
+    pwaInstallTitle: "Install UniMate App",
+    pwaInstallSubtitle: "Add to your home screen for quick access and full app experience",
+    pwaInstallIosStep1: "Tap the Share button in Safari's toolbar",
+    pwaInstallIosStep2: "Scroll down and select 'Add to Home Screen'",
+    pwaInstallIosStep3: "Tap 'Add' in the top right corner",
+    pwaInstallButton: "Install App",
+    pwaInstallDismiss: "Maybe Later",
+    pwaInstalledBanner: "UniMate installed successfully!",
+    offlineBannerTitle: "You are currently offline",
+    offlineBannerDesc: "Displayed content may be limited until network returns",
+    offlineRetry: "Retry Connection",
+    pwaUpdateAvailable: "A new update is available for UniMate",
+    pwaUpdateAction: "Update Now",
   },
 };
 

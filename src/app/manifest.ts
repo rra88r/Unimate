@@ -1,0 +1,81 @@
+import { MetadataRoute } from "next";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "UniMate - الرفيق الجامعي الذكي",
+    short_name: "UniMate | يوني ميت",
+    description:
+      "الرفيق الجامعي المتكامل لطلاب الجامعات: جدول دراسي، واجبات، اختبارات، حاسبة معدل، ومساعد ذكي",
+    start_url: "/dashboard",
+    id: "/?source=pwa",
+    scope: "/",
+    display: "standalone",
+    orientation: "portrait",
+    background_color: "#0f172a",
+    theme_color: "#4f46e5",
+    lang: "ar",
+    dir: "rtl",
+    categories: ["education", "productivity", "utilities"],
+    icons: [
+      {
+        src: "/icons/icon-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/icons/icon-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/icons/icon-maskable-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "maskable",
+      },
+      {
+        src: "/icons/apple-touch-icon.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+      {
+        src: "/icons/icon.svg",
+        sizes: "512x512",
+        type: "image/svg+xml",
+        purpose: "any",
+      },
+    ],
+    shortcuts: [
+      {
+        name: "الجدول الدراسي",
+        short_name: "الجدول",
+        description: "عرض الجدول الدراسي والمحاضرات الأسبوعية",
+        url: "/timetable",
+        icons: [{ src: "/icons/icon-192x192.png", sizes: "192x192" }],
+      },
+      {
+        name: "حاسبة المعدل",
+        short_name: "المعدل",
+        description: "حساب المعدل الفصلي والتراكمي وتوقع التقديرات",
+        url: "/gpa",
+        icons: [{ src: "/icons/icon-192x192.png", sizes: "192x192" }],
+      },
+      {
+        name: "المساعد الذكي",
+        short_name: "المساعد",
+        description: "محادثة المساعد الجامعي الذكي وتلخيص الدروس",
+        url: "/ai-assistant",
+        icons: [{ src: "/icons/icon-192x192.png", sizes: "192x192" }],
+      },
+      {
+        name: "الواجبات والمشاريع",
+        short_name: "الواجبات",
+        description: "متابعة المهام والواجبات والمواعيد النهائية",
+        url: "/assignments",
+        icons: [{ src: "/icons/icon-192x192.png", sizes: "192x192" }],
+      },
+    ],
+  };
+}

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="unimate-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="50%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#312e81" />
+    </linearGradient>
+    <filter id="icon-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Rounded Squircle App Icon Background -->
+  <rect width="512" height="512" rx="112" fill="url(#unimate-grad)" />
+  
+  <!-- Lucide Style Graduation Cap Icon -->
+  <g transform="translate(68, 76) scale(15.7)" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#icon-shadow)">
+    <!-- Mortarboard Diamond -->
+    <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" fill="#ffffff" fill-opacity="0.95" />
+    <!-- Tassel hanging down -->
+    <path d="M22 10v6" stroke="#ffffff" stroke-width="2" />
+    <circle cx="22" cy="16.5" r="0.8" fill="#ffffff" />
+    <!-- Skull Cap base curve -->
+    <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" fill="#ffffff" fill-opacity="0.9" />
+  </g>
+</svg>

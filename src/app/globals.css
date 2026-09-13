@@ -16,6 +16,14 @@
   --background-end-rgb: 2, 6, 23;
 }
 
+html {
+  /* Prevent horizontal scroll bounce on iOS */
+  overflow-x: hidden;
+  /* Fast tap response without 300ms delay */
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -26,8 +34,10 @@ body {
     rgb(var(--background-start-rgb));
   font-family: 'Cairo', 'Inter', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Custom modern scrollbar */
@@ -53,11 +63,55 @@ body {
   background: rgba(148, 163, 184, 0.7);
 }
 
-/* iOS Safe Areas */
+/* iOS & iPadOS Safe Areas */
 .pb-safe {
-  padding-bottom: env(safe-area-inset-bottom, 1rem);
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 0.75rem);
 }
 
 .pt-safe {
-  padding-top: env(safe-area-inset-top, 1rem);
+  padding-top: max(env(safe-area-inset-top, 0px), 0.75rem);
+}
+
+.pl-safe {
+  padding-left: max(env(safe-area-inset-left, 0px), 0.75rem);
+}
+
+.pr-safe {
+  padding-right: max(env(safe-area-inset-right, 0px), 0.75rem);
+}
+
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.mt-safe {
+  margin-top: env(safe-area-inset-top, 0px);
+}
+
+/* Apple HIG Touch Target minimum (44x44px) helper */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Standalone iOS Display Tweaks */
+@media all and (display-mode: standalone) {
+  body {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  input, textarea {
+    user-select: auto;
+    -webkit-user-select: auto;
+  }
+}
+
+/* Smooth keyframes for splash loading */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }

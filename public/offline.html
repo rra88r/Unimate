@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#4f46e5" />
+  <title>UniMate - غير متصل بالإنترنت | Offline</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --subtext: #64748b;
+      --border: #e2e8f0;
+      --brand: #4f46e5;
+      --brand-hover: #4338ca;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --card-bg: #1e293b;
+        --text: #f8fafc;
+        --subtext: #94a3b8;
+        --border: #334155;
+        --brand: #6366f1;
+        --brand-hover: #4f46e5;
+      }
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Cairo", "Inter", sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      padding-top: env(safe-area-inset-top, 1.5rem);
+      padding-bottom: env(safe-area-inset-bottom, 1.5rem);
+      text-align: center;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      padding: 2.5rem 2rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .icon-wrapper {
+      width: 80px;
+      height: 80px;
+      border-radius: 1.25rem;
+      background: linear-gradient(135deg, #6366f1, #4f46e5, #312e81);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 20px -4px rgba(79, 70, 229, 0.4);
+    }
+    .offline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.85rem;
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      border-radius: 9999px;
+      font-size: 0.825rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .offline-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #ef4444;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      color: var(--subtext);
+      font-size: 0.925rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .btn {
+      background: var(--brand);
+      color: white;
+      border: none;
+      border-radius: 1rem;
+      padding: 0.875rem 2rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      min-height: 48px;
+      width: 100%;
+      justify-content: center;
+    }
+    .btn:hover {
+      background: var(--brand-hover);
+      transform: translateY(-1px);
+    }
+    .btn:active {
+      transform: scale(0.98);
+    }
+    .app-title {
+      font-size: 0.75rem;
+      color: var(--subtext);
+      margin-top: 1.5rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon-wrapper">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+        <path d="M22 10v6" />
+        <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+      </svg>
+    </div>
+
+    <div class="offline-badge">
+      <span class="offline-dot"></span>
+      <span>لا يوجد اتصال بالإنترنت</span>
+    </div>
+
+    <h1>أنت تتصفح في وضع عدم الاتصال</h1>
+    <p>
+      يبدو أن اتصالك بالإنترنت مقطوع حالياً. يمكنك إعادة المحاولة بمجرد عودة الاتصال، أو استئناف التصفح عند الاتصال بشبكة Wi-Fi أو البيانات الخلوية.
+    </p>
+
+    <button class="btn" onclick="retryConnection()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+        <path d="M3 3v5h5" />
+        <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+        <path d="M16 21h5v-5" />
+      </svg>
+      <span>إعادة المحاولة / Retry</span>
+    </button>
+
+    <div class="app-title">UniMate PWA • يوني ميت</div>
+  </div>
+
+  <script>
+    function retryConnection() {
+      window.location.reload();
+    }
+    // Auto-reload when connectivity returns
+    window.addEventListener('online', () => {
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>
