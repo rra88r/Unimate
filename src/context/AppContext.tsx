@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Language, translations, TranslationKey } from "@/lib/i18n/translations";
+import { setNativeStatusBar, triggerHaptic } from "@/lib/capacitor";
 
 export interface UserProfile {
   id: string;
@@ -100,6 +101,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   };
 
   const toggleLanguage = () => {
+    triggerHaptic();
     const next = language === "ar" ? "en" : "ar";
     setLanguage(next);
   };
@@ -107,6 +109,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const setTheme = (newTheme: "light" | "dark") => {
     setThemeState(newTheme);
     localStorage.setItem("unimate_theme", newTheme);
+    setNativeStatusBar(newTheme === "dark");
     if (newTheme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
@@ -115,6 +118,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   };
 
   const toggleTheme = () => {
+    triggerHaptic();
     const next = theme === "light" ? "dark" : "light";
     setTheme(next);
   };

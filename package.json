@@ -14,9 +14,18 @@
     "prisma:push": "prisma db push",
     "prisma:seed": "node prisma/seed.js",
     "db:setup": "prisma generate && prisma db push && node prisma/seed.js",
-    "pwa:icons": "node scripts/generate-pwa-icons.js"
+    "pwa:icons": "node scripts/generate-pwa-icons.js",
+    "cap:sync": "cap sync ios",
+    "cap:copy": "cap copy ios",
+    "cap:open": "cap open ios"
   },
   "dependencies": {
+    "@capacitor/cli": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/ios": "^8.5.2",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@capacitor/status-bar": "^8.0.3",
     "@prisma/client": "^5.22.0",
     "bcryptjs": "^2.4.3",
     "canvas-confetti": "^1.9.4",
@@ -39,6 +48,8 @@
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.24",
     "jsdom": "^25.0.1",
     "postcss": "^8.4.49",
     "prisma": "^5.22.0",

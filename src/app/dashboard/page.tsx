@@ -21,6 +21,7 @@ import {
   Plus,
 } from "lucide-react";
 import confetti from "canvas-confetti";
+import { triggerHapticNotification } from "@/lib/capacitor";
 
 export default function DashboardPage() {
   const { t, isRtl, user } = useApp();
@@ -49,6 +50,7 @@ export default function DashboardPage() {
     const nextStatus = currentStatus === "completed" ? "pending" : "completed";
 
     if (nextStatus === "completed") {
+      triggerHapticNotification();
       try {
         confetti({
           particleCount: 80,

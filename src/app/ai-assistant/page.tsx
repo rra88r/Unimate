@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { useApp } from "@/context/AppContext";
 import { Card, Button } from "@/components/ui/Button";
@@ -32,7 +32,7 @@ export default function AiAssistantPage() {
   const [suggestedFollowUps, setSuggestedFollowUps] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     try {
       const res = await fetch("/api/ai");
       if (res.ok) {
@@ -52,11 +52,11 @@ export default function AiAssistantPage() {
     } catch (e) {
       console.error(e);
     }
-  };
+  }, [t]);
 
   useEffect(() => {
     fetchMessages();
-  }, []);
+  }, [fetchMessages]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

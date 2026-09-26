@@ -49,62 +49,36 @@ UniMate is configured as a standalone Progressive Web App (PWA), providing a nat
 
 ---
 
-## 🍎 Next Step: Packaging UniMate for the Apple App Store
+## 🍎 iOS & iPad Native App Packaging (Capacitor & App Store)
 
-To convert UniMate into a native iOS app (`.ipa`) ready for distribution on the **Apple App Store**:
+UniMate includes a pre-configured native **Capacitor 8** iOS project in `ios/App`, enabling full distribution to the **Apple App Store** and **TestFlight** alongside its PWA mode.
 
-### Step 1: Initialize Capacitor
-UniMate's standalone Next.js architecture is 100% compatible with **Capacitor** or **WKWebView native wrappers**:
+### 🌟 Native Features Integrated
+- **1024×1024 High-Res Universal App Store Icon:** Automatically generated and synced into `ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png`.
+- **Dynamic Native iOS Status Bar (`@capacitor/status-bar`):** Automatically switches between dark and light content to match student theme preferences.
+- **Physical Haptic Feedback (`@capacitor/haptics`):** Tactile responses when students complete assignments, finish Pomodoro timers, or switch themes/languages.
+- **Branded Native Splash Screen (`@capacitor/splash-screen`):** Instant launch animation with UniMate's signature indigo gradient.
+- **Safe Area & Dynamic Island Geometry:** Edge-to-edge support with custom `pt-safe` and `pb-safe` constraints.
+
+### 🛠️ Developer Workflow Commands
 
 ```bash
-# Install Capacitor core and iOS platform
-npm install @capacitor/core @capacitor/cli @capacitor/ios
+# Sync web assets, configuration, and plugins to the native iOS project
+npm run cap:sync
 
-# Initialize Capacitor configuration
-npx cap init UniMate app.unimate.student --web-dir .next/standalone/public
+# Copy public assets only
+npm run cap:copy
+
+# Open the native Xcode project (on macOS)
+npm run cap:open
 ```
 
-### Step 2: Configure capacitor.config.json
-Point Capacitor to your production Next.js server or build:
-```json
-{
-  "appId": "app.unimate.student",
-  "appName": "UniMate",
-  "webDir": "public",
-  "server": {
-    "url": "https://your-production-unimate-domain.com",
-    "cleartext": false
-  },
-  "ios": {
-    "contentInset": "always",
-    "allowsLinkPreview": false,
-    "scrollEnabled": true
-  }
-}
-```
+### 📦 Archiving & Submitting to App Store Connect
 
-### Step 3: Generate Xcode Project
-```bash
-# Add the iOS platform
-npx cap add ios
-
-# Open project in Xcode
-npx cap open ios
-```
-
-### Step 4: Configure Xcode Project
-In Xcode:
-1. **Signing & Capabilities:** Select your Apple Developer Team and specify your Bundle Identifier (`app.unimate.student`).
-2. **App Icons & Launch Images:** Capacitor will automatically map the icons generated in `public/icons/` into `AppIcon.appiconset`.
-3. **Status Bar & Appearance:** Set `Status bar style` to `Light Content` and `View controller-based status bar appearance` to `YES`.
-4. **Push Notifications (Optional):** Add the *Push Notifications* capability if integrating APNs for assignment and exam reminders.
-
-### Step 5: Archive & Submit to App Store Connect
-1. Select the generic iOS device or your connected test iPhone/iPad.
-2. Go to **Product > Archive**.
-3. Once archived, click **Distribute App** and choose **App Store Connect**.
-4. Test with internal and external testers via **TestFlight**.
-5. Submit for final App Review with Arabic and English descriptions, keywords, and screenshots.
+1. **Open Xcode:** Run `npm run cap:open` on a Mac or transfer the `ios/` folder.
+2. **Signing & Capabilities:** Select your Apple Developer Team and ensure the Bundle Identifier is set to `app.unimate.student`.
+3. **Archive Build:** Select `Any iOS Device (arm64)` from the scheme selector, then go to **Product > Archive**.
+4. **Distribute to App Store Connect:** In the Xcode Organizer, click **Distribute App** -> **App Store Connect** to push directly to TestFlight and App Store submission.
 
 ---
 
@@ -167,9 +141,11 @@ npm run test
 ```
 
 Test suites cover:
+- **`tests/ios-packaging.test.ts`**: Native Xcode project structure, `Info.plist` display names & orientations, 1024x1024 App Store icon verification, and Capacitor native plugin safe exports.
 - **`tests/pwa.test.ts`**: PWA manifest validation, Service Worker API security bypass verification, icon file integrity, and offline fallback functionality.
 - **`tests/gpa.test.ts`**: 5.0 and 4.0 GPA scale calculations, credit hour weighting, and target simulator feasibility.
-- **`tests/timetable.test.ts`**: Overlap conflict detection algorithms, border-touching class verification, and RFC 5545 iCal generator.
+- **`tests/timetable.test.ts`**: Overlap c
+onflict detection algorithms, border-touching class verification, and RFC 5545 iCal generator.
 - **`tests/translations.test.ts`**: Complete symmetry and key coverage between Arabic and English dictionaries.
 - **`tests/ai.test.ts`**: AI Study Assistant prompt generation (study plans, summaries, flashcards).
 

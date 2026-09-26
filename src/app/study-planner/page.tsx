@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { useApp } from "@/context/AppContext";
 import { Card, Badge, Button } from "@/components/ui/Button";
@@ -18,6 +18,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import confetti from "canvas-confetti";
+import { triggerHapticNotification } from "@/lib/capacitor";
 
 export default function StudyPlannerPage() {
   const { t, isRtl } = useApp();
@@ -46,7 +47,7 @@ export default function StudyPlannerPage() {
     notes: "",
   });
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [sessRes, coursesRes] = await Promise.all([
         fetch("/api/study-planner"),
@@ -63,8 +64,8 @@ export default function StudyPlannerPage() {
           totalMinutes: sData.totalMinutes || 0,
         });
         setCourses(cData.courses || []);
-        if (cData.courses?.length > 0 && !formData.courseId) {
-          setFormData((prev) => ({ ...prev, courseId: cData.courses[0].id }));
+        if (cData.courses?.length > 0) {
+          setFormData((prev) => (prev.courseId ? prev : { ...prev, courseId: cData.courses[0].id }));
         }
       }
     } catch (e) {
@@ -72,11 +73,28 @@ export default function StudyPlannerPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
+
+  const handleTimerComplete = useCallback(() => {
+    triggerHapticNotification();
+    try {
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.7 } });
+    } catch {}
+
+    if (timerMode === "focus") {
+      // Prompt user to save the session
+      setFormData((prev) => ({
+        ...prev,
+        title: "جلسة تركيز بومودورو مكتملة",
+        durationMinutes: 25,
+      }));
+      setIsModalOpen(true);
+    }
+  }, [timerMode]);
 
   // Timer Tick
   useEffect(() => {
@@ -98,23 +116,7 @@ export default function StudyPlannerPage() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isRunning, timerMode]);
-
-  const handleTimerComplete = () => {
-    try {
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.7 } });
-    } catch {}
-
-    if (timerMode === "focus") {
-      // Prompt user to save the session
-      setFormData((prev) => ({
-        ...prev,
-        title: "جلسة تركيز بومودورو مكتملة",
-        durationMinutes: 25,
-      }));
-      setIsModalOpen(true);
-    }
-  };
+  }, [isRunning, timerMode, handleTimerComplete]);
 
   const switchMode = (mode: "focus" | "short_break" | "long_break") => {
     setIsRunning(false);

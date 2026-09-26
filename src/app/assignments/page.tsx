@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { useApp } from "@/context/AppContext";
 import { Card, Badge, Button } from "@/components/ui/Button";
@@ -17,6 +17,7 @@ import {
   Filter,
 } from "lucide-react";
 import confetti from "canvas-confetti";
+import { triggerHapticNotification } from "@/lib/capacitor";
 
 export default function AssignmentsPage() {
   const { t, isRtl } = useApp();
@@ -42,7 +43,7 @@ export default function AssignmentsPage() {
     weightPercentage: "",
   });
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [assignRes, coursesRes] = await Promise.all([
         fetch("/api/assignments"),
@@ -53,8 +54,8 @@ export default function AssignmentsPage() {
         const cData = await coursesRes.json();
         setAssignments(aData.assignments || []);
         setCourses(cData.courses || []);
-        if (cData.courses?.length > 0 && !formData.courseId) {
-          setFormData((prev) => ({ ...prev, courseId: cData.courses[0].id }));
+        if (cData.courses?.length > 0) {
+          setFormData((prev) => (prev.courseId ? prev : { ...prev, courseId: cData.courses[0].id }));
         }
       }
     } catch (e) {
@@ -62,11 +63,11 @@ export default function AssignmentsPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const handleOpenAdd = () => {
     setEditingItem(null);
@@ -126,6 +127,7 @@ export default function AssignmentsPage() {
   const handleToggleStatus = async (item: any) => {
     const nextStatus = item.status === "completed" ? "pending" : "completed";
     if (nextStatus === "completed") {
+      triggerHapticNotification();
       try {
         confetti({ particleCount: 70, spread: 60, origin: { y: 0.8 } });
       } catch {}

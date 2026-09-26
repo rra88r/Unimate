@@ -2,6 +2,22 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth";
 
+export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+  const user = await getCurrentUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const exam = await prisma.exam.findFirst({
+    where: { id: params.id, userId: user.id },
+    include: { course: true },
+  });
+
+  if (!exam) {
+    return NextResponse.json({ error: "Exam not found" }, { status: 404 });
+  }
+
+  return NextResponse.json({ success: true, exam });
+}
+
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   const user = await getCurrentUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

@@ -217,6 +217,17 @@ fs.writeFileSync(path.join(outDir, "icon-192x192.png"), p192);
 const p512 = renderUnimateIcon(512);
 fs.writeFileSync(path.join(outDir, "icon-512x512.png"), p512);
 
+// 1024x1024 (iOS App Store & Universal Retina)
+const p1024 = renderUnimateIcon(1024, true);
+fs.writeFileSync(path.join(outDir, "icon-1024x1024.png"), p1024);
+
+// iOS AppIcon.appiconset
+const iosAppIconDir = path.join(__dirname, "..", "ios", "App", "App", "Assets.xcassets", "AppIcon.appiconset");
+if (fs.existsSync(iosAppIconDir)) {
+  fs.writeFileSync(path.join(iosAppIconDir, "AppIcon-512@2x.png"), p1024);
+  console.log("Updated iOS AppIcon in Xcode assets!");
+}
+
 // 512x512 maskable (full bleed)
 const p512Mask = renderUnimateIcon(512, true);
 fs.writeFileSync(path.join(outDir, "icon-maskable-512x512.png"), p512Mask);
@@ -246,4 +257,4 @@ const icoBuf = createIco([
 ]);
 fs.writeFileSync(path.join(pubDir, "favicon.ico"), icoBuf);
 
-console.log("All PWA icons generated successfully!");
+console.log("All PWA and iOS icons generated successfully!");

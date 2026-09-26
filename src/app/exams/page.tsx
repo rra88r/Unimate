@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { useApp } from "@/context/AppContext";
 import { Card, Badge, Button } from "@/components/ui/Button";
@@ -37,7 +37,7 @@ export default function ExamsPage() {
     notes: "",
   });
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [exRes, coRes] = await Promise.all([
         fetch("/api/exams"),
@@ -48,8 +48,8 @@ export default function ExamsPage() {
         const coData = await coRes.json();
         setExams(exData.exams || []);
         setCourses(coData.courses || []);
-        if (coData.courses?.length > 0 && !formData.courseId) {
-          setFormData((prev) => ({ ...prev, courseId: coData.courses[0].id }));
+        if (coData.courses?.length > 0) {
+          setFormData((prev) => (prev.courseId ? prev : { ...prev, courseId: coData.courses[0].id }));
         }
       }
     } catch (e) {
@@ -57,11 +57,11 @@ export default function ExamsPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const handleOpenAdd = () => {
     setEditingItem(null);
